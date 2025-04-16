@@ -1,0 +1,27 @@
+{block content}
+
+<p><a n:href="Home:default">← zpět na výpis příspěvků</a></p>
+
+    {foreach $categories as $category}
+
+		<div> <a href="{link Home:category $category->id}">{$category->name}</a></div>
+
+	{/foreach}
+
+<div n:foreach="$posts as $post" class="post">
+		<div class="date">{$post->created_at|date:'F j, Y'}</div>
+
+		<h2><a href="{link Post:show $post->id}">{$post->title}</a></h2>
+
+		<div class="category">{$post->category->name}</div>
+
+		<div>{$post->content|truncate:256}</div>
+
+		{if $post->image}
+    		<img src="{$basePath}/{$post->image}">
+		{else}
+    		<img src="{$basePath}/upload/no-image.png">
+		{/if}
+	</div>
+
+{/block}

@@ -1,0 +1,56 @@
+{block content}
+	<h1>Můj blog</h1>
+
+	<a n:href="Edit:create" n:if="$user->isLoggedIn()">Vytvořit příspěvek</a>
+
+	{foreach $categories as $category}
+
+		<div> <a href="{link Home:category $category->id}">{$category->name}</a></div>
+
+	{/foreach}
+
+	<div n:foreach="$posts as $post" class="post">
+	
+	{if $post->status != "ARCHIVED" or $user->isLoggedIn() == True}
+	
+		<div class="date">{$post->created_at|date:'F j, Y'}</div>
+
+		<h2>Stav: {$post->status}</h2>
+
+		<h2><a href="{link Post:show $post->id}">{$post->title}</a></h2>
+
+		<div class="category">{$post->category->name}</div>
+
+		<div>{$post->content|truncate:256}</div>
+
+		<div class="viewsAdd">{$post->view} zobrazení</div>
+
+
+		{if $post->image}
+    		<img src="{$basePath}/{$post->image}">
+		{else}
+    		<img src="{$basePath}/upload/no-image.png">
+		{/if}
+	{/if}	
+	</div>
+
+
+<div class="pagination">
+	{if $page > 1}
+		<a n:href="default, 1">První</a>
+		&nbsp;|&nbsp;
+		<a n:href="default, $page - 1">Předchozí</a>
+		&nbsp;|&nbsp;
+	{/if}
+
+	Stránka {$page} z {$lastPage}
+
+	{if $page < $lastPage}
+		&nbsp;|&nbsp;
+		<a n:href="default, $page + 1">Další</a>
+		&nbsp;|&nbsp;
+		<a n:href="default, $lastPage">Poslední</a>
+	{/if}
+</div>
+
+{/block}
