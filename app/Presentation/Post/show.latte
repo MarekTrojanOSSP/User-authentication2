@@ -1,5 +1,19 @@
 {block content}
 
+{if $user->isLoggedIn()}
+    	<p>(<a n:href="Sign:out">Sign out</a>)</p>
+	{else}
+    	<p>(<a n:href="Sign:in">Sign in</a>)</p>
+	{/if}
+
+	{if $user->isInRole('admin')}
+    	<p>Jsi role Admin</p>
+	{elseif $user->isInRole('user')}
+    	<p>Jsi role User</p>
+	{else}
+    	<p>Nemáš roli - jsi pouze návštěvník</p>
+	{/if}
+
 <p><a n:href="Home:default">← zpět na výpis příspěvků</a></p>
 
 <div class="date">{$post->created_at|date:'F j, Y'}</div>

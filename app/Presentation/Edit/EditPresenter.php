@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UI\Edit;
+namespace App\Presentation\Edit;
 
 use Nette;
 use App\Model\PostFacade;
