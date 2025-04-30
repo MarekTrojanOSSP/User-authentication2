@@ -38,6 +38,10 @@
 
 {if $post->status =="OPEN" || $user->isLoggedIn() && $post->status !="ARCHIVED"}
 
+<a n:href="liked! $post->id,1">Líbí se mi!</a>
+
+<a n:href="liked! $post->id,0">Nelíbí se mi!</a>
+
 <a n:href="Edit:edit $post->id">Upravit příspěvek</a>
 
 <h2>Vložte nový příspěvek</h2>

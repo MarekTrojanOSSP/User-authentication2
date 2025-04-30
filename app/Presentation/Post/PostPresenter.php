@@ -71,13 +71,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		$this->redirect('this', ['postId' => $postId]);
 	}
 
-	public function addView(int $postId, int $view) {
-		$this->template->views = $this->facade->addViews($postId, $view);
-		
-		 $this->table('post');
-		 $this->count($view);
-		 $this->update($view);
-	}
 	public function actionShow(int $postId): void 
 {
     $post = $this->facade->getPostById($postId);
@@ -85,6 +78,20 @@ final class PostPresenter extends Nette\Application\UI\Presenter
     if ($post->status === 'ARCHIVED' && !$this->user->isLoggedIn()) {
         $this->redirect('Home:default');
     }
+}
+
+public function handleLiked(int $postId, int $liked): void
+{
+    if (!$this->getUser()->isLoggedIn()) {
+        $this->flashMessage('Pro hodnocení příspěvku se musíte přihlásit.', 'warning');
+        $this->redirect('Sign:in');
+        return;
+    }
+
+    $userId = $this->getUser()->getId();
+    $this->facade->updateRating($userId, $postId, $liked);
+
+    $this->redirect('this');
 }
 
 }
