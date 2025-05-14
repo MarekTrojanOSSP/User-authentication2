@@ -38,9 +38,10 @@
 
 {if $post->status =="OPEN" || $user->isLoggedIn() && $post->status !="ARCHIVED"}
 
-<a n:href="liked! $post->id,1">Líbí se mi!</a>
-
-<a n:href="liked! $post->id,0">Nelíbí se mi!</a>
+<div n:snippet="liked">
+    <a n:href="liked! $post->id, 1" class="ajax btn btn-success">Like</a>
+    <a n:href="liked! $post->id, 0" class="ajax btn btn-danger">Dislike</a>
+</div>
 
 <a n:href="Edit:edit $post->id">Upravit příspěvek</a>
 

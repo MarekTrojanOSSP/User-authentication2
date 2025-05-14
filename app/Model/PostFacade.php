@@ -94,21 +94,22 @@ final class PostFacade
 	}
 
 	public function updateRating(int $userId, int $postId, int $liked): void
-    {
-        $rating = $this->database->table('rating')
-            ->where('user_id = ? AND post_id = ?', $userId, $postId)
-            ->fetch();
+{
+    $rating = $this->database->table('rating')
+        ->where('user_id = ? AND post_id = ?', $userId, $postId)
+        ->fetch();
 
-        if ($rating) {
-            $rating->update([
-                'liked' => $liked,
-            ]);
-        } else {
-            $this->database->table('rating')->insert([
-                'user_id' => $userId,
-                'post_id' => $postId,
-                'liked' => $liked,
-            ]);
-        }
+    if ($rating) {
+        $rating->update([
+            'liked' => $liked,
+        ]);
+    } else {
+        $this->database->table('rating')->insert([
+            'user_id' => $userId,
+            'post_id' => $postId,
+            'liked' => $liked,
+        ]);
     }
+}
+
 }
